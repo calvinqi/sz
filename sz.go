@@ -18,6 +18,7 @@ type userArgType struct {
 // TODO get import to support "go build" and put it in a "work space"
 // Citation: https://stackoverflow.com/questions/11720079/how-can-i-see-the-size-of-files-and-directories-in-linux
 
+// learned from here https://flaviocopes.com/go-list-files/
 func getSize(fi os.FileInfo, origPath string) int64 {
 	// returns size of the path in bytes
 	// file will return the direct size of the file
