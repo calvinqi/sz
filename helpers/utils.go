@@ -15,18 +15,25 @@ const (
 // ReadableBytes convert byte num to readable string. E.g. 1240 -> 1.2KB
 func ReadableBytes(numBytes int64) string {
 	numBytesF := float64(numBytes)
+
+	amt := numBytesF
+	unitStr := "B"
 	if numBytes > TB {
-		return fmt.Sprintf("%.1fTB", numBytesF/TB)
+		amt = numBytesF / TB
+		unitStr = "T"
+	} else if numBytes > GB {
+		amt = numBytesF / GB
+		unitStr = "G"
+	} else if numBytes > MB {
+		amt = numBytesF / MB
+		unitStr = "M"
+	} else if numBytes > KB {
+		amt = numBytesF / KB
+		unitStr = "K"
 	}
-	if numBytes > GB {
-		return fmt.Sprintf("%.1fGB", numBytesF/GB)
+	// remaining case is just bytes
+	if amt < 10 {
+		return fmt.Sprintf("%.1f%s", amt, unitStr)
 	}
-	if numBytes > MB {
-		return fmt.Sprintf("%.1fMB", numBytesF/MB)
-	}
-	if numBytes > KB {
-		return fmt.Sprintf("%.1fKB", numBytesF/KB)
-	}
-	// remaining is just bytes
-	return fmt.Sprintf("%dB", numBytes)
+	return fmt.Sprintf("%d%s", int(amt), unitStr)
 }

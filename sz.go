@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strconv"
 
 	"./helpers"
 )
@@ -17,6 +16,7 @@ type userArgType struct {
 
 // const progName string = "sz"
 // TODO get import to support "go build" and put it in a "work space"
+// Citation: https://stackoverflow.com/questions/11720079/how-can-i-see-the-size-of-files-and-directories-in-linux
 
 func getSize(fi os.FileInfo, origPath string) int64 {
 	// returns size of the path in bytes
@@ -76,24 +76,19 @@ func maxLength(arr []string) int {
 	return result
 }
 
-func formatLine(sizeStr string, name string, maxLenStr string) string {
-	return fmt.Sprintf("%-"+maxLenStr+"s  %s", sizeStr, name)
-}
-
 func main() {
 	userArgs := processArgs()
 	path := userArgs.path
 	fileInfos, _ := ioutil.ReadDir(path)
-	numFiles := len(fileInfos)
-	sizeStrs := make([]string, numFiles) // one size string per file
 
-	for i, fileInfo := range fileInfos {
+	for _, fileInfo := range fileInfos {
 		sizeStr := helpers.ReadableBytes(getSize(fileInfo, path))
-		sizeStrs[i] = sizeStr
 		// fmt.Println(fmt.Sprintf("%s %s", sizeStr, fileInfo.Name()))
-	}
-	maxLenStr := strconv.Itoa(maxLength(sizeStrs))
-	for i, fileInfo := range fileInfos {
-		fmt.Println(formatLine(sizeStrs[i], fileInfo.Name(), maxLenStr))
+		dirSlash := ""
+		if fileInfo.IsDir() {
+			dirSlash = "/"
+		}
+
+		fmt.Printf(fmt.Sprintf("%-4s   %s%s\n", sizeStr, fileInfo.Name(), dirSlash))
 	}
 }
