@@ -3,12 +3,17 @@ package main
 import (
 	"flag"
 	"fmt"
+
+	"github.com/mattn/go-isatty"
+
 	"io/ioutil"
 	"os"
 	"path/filepath"
 
 	"./helpers"
 )
+
+const DirColor = "\033[1;34m%s\033[0m"
 
 type userArgType struct {
 	path string
@@ -17,6 +22,7 @@ type userArgType struct {
 // const progName string = "sz"
 // TODO get import to support "go build" and put it in a "work space"
 // Citation: https://stackoverflow.com/questions/11720079/how-can-i-see-the-size-of-files-and-directories-in-linux
+// go get github.com/mattn/go-isatty
 
 // learned from here https://flaviocopes.com/go-list-files/
 func getSize(fi os.FileInfo, origPath string) int64 {
@@ -85,11 +91,16 @@ func main() {
 	for _, fileInfo := range fileInfos {
 		sizeStr := helpers.ReadableBytes(getSize(fileInfo, path))
 		// fmt.Println(fmt.Sprintf("%s %s", sizeStr, fileInfo.Name()))
-		dirSlash := ""
+		pathName := fileInfo.Name()
 		if fileInfo.IsDir() {
-			dirSlash = "/"
+			// add trailing slash for clarity
+			pathName += "/"
+			// if directory and valid terminal, colorize the name as well
+			if isatty.IsTerminal(os.Stdout.Fd()) {
+				pathName = fmt.Sprintf(DirColor, fileInfo.Name()+"/")
+			}
 		}
 
-		fmt.Printf(fmt.Sprintf("%-4s   %s%s\n", sizeStr, fileInfo.Name(), dirSlash))
+		fmt.Printf(fmt.Sprintf("%-4s   %s\n", sizeStr, pathName))
 	}
 }
