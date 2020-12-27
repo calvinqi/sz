@@ -47,4 +47,4 @@ go build sz.go
 ```bash
 cp sz /usr/local/bin
 ```
-4. Have fun! You can use `sz` freely when navigating your shell just like you would use `ls` or `cd`.
+4. Have fun! You can now use the `sz` command freely when navigating your shell just like you would use `ls` or `cd`.
