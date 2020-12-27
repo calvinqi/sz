@@ -35,7 +35,7 @@ calvinqi$ sz -s ~/github/music-sharing
 * Existing options didn't seem sufficient (`ls -l` only shows file sizes and not the contents of folders, and for including folders, piping `ls` into `xargs du -sh`, piped again into `sort` was getting cumbersome)
 
 ## Installation
-Interested? Sweet! Should be a quick installation. `sz` is written with Golang, partially because it was the first example I used to learn the language. Luckily it's cross platform so installation should be easy!
+Interested? Sweet! Should be a quick installation. `sz` is written with Golang, partially because it was the first example I used to learn the language. Go is cross platform so installation should be easy!
 1. Install Go [here](https://golang.org/doc/install) if you don't already have it. Supports Linux+Mac+Windows
 2. Clone the repo and build the program
 ```bash
