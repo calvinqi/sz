@@ -37,12 +37,12 @@ calvinqi$ sz -s ~/github/music-sharing
 ## Installation
 Interested? Sweet! Should be a quick installation. `sz` is written with Golang, partially because it was the first example I used to learn the language. Go is cross platform so installation should be easy!
 1. Install Go [here](https://golang.org/doc/install) if you don't already have it. Supports Linux+Mac+Windows
-2. Clone the repo and navigate inside build the program
+2. Clone the repo and navigate inside
 ```bash
 git clone https://github.com/calvinqi/sz.git
 cd sz
 ```
-3. Install packages and build the program.
+3. Install Go dependencies and build the program.
 ```bash
 go get github.com/spf13/pflag
 go get github.com/mattn/go-isatty
